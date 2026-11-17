@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSim - Simulador Depredador-Presa</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>🌿 EcoSim: Simulador de Ecosistema Depredador-Presa</h1>
+    </header>
+
+    <main class="dashboard">
+        <!-- Panel Izquierdo: Controles -->
+        <aside class="controls-panel">
+            <section class="control-group">
+                <h3>🕹️ Reproducción</h3>
+                <div class="button-row">
+                    <button id="btn-play-pause">Iniciar ▶️</button>
+                    <button id="btn-step">+1 Tick ⏭️</button>
+                    <button id="btn-reset">Reiniciar 🔄</button>
+                </div>
+                <div class="speed-selector">
+                    <label>Velocidad:</label>
+                    <label><input type="radio" name="speed" value="100" checked> 1x</label>
+                    <label><input type="radio" name="speed" value="50"> 2x</label>
+                    <label><input type="radio" name="speed" value="10"> 5x</label>
+                </div>
+                <div class="seed-selector">
+                    <label><input type="checkbox" id="chk-seed"> Usar semilla fija (42)</label>
+                </div>
+            </section>
+
+            <section class="control-group">
+                <h3>🖌️ Pincel Interactivo</h3>
+                <div class="brush-tools">
+                    <label class="brush-btn plant"><input type="radio" name="brush" value="1"> Planta</label>
+                    <label class="brush-btn herbivore"><input type="radio" name="brush" value="2" checked> Herbívoro</label>
+                    <label class="brush-btn predator"><input type="radio" name="brush" value="3"> Depredador</label>
+                    <label class="brush-btn erase"><input type="radio" name="brush" value="0"> Borrar</label>
+                </div>
+            </section>
+
+            <section class="control-group sliders">
+                <h3>🎚️ Parámetros (Tiempo Real)</h3>
+                <label>Tasa crecimiento vegetal (<span id="val-plant-growth">3.0</span>%)
+                    <input type="range" id="sl-plant-growth" min="0" max="20" step="0.1" value="3.0">
+                </label>
+                <label>Energía por Planta (<span id="val-energy-plant">10</span>)
+                    <input type="range" id="sl-energy-plant" min="1" max="50" step="1" value="10">
+                </label>
+                <label>Energía por Presa (<span id="val-energy-prey">15</span>)
+                    <input type="range" id="sl-energy-prey" min="1" max="100" step="1" value="15">
+                </label>
+                <label>Umbral de Reproducción (<span id="val-reproduction">20</span>)
+                    <input type="range" id="sl-reproduction" min="5" max="100" step="1" value="20">
+                </label>
+            </section>
+
+            <section class="control-group">
+                <h3>📑 Presets Calibrados</h3>
+                <button class="preset-btn" data-preset="equilibrio">Equilibrio Dinámico</button>
+                <button class="preset-btn" data-preset="colapso">Sobredepredación (Colapso)</button>
+                <button class="preset-btn" data-preset="explosion">Explosión Demográfica</button>
+            </section>
+        </aside>
+
+        <!-- Centro: Simulación -->
+        <section class="simulation-view">
+            <canvas id="gridCanvas" width="540" height="540"></canvas>
+            <div id="extinction-banner" class="hidden">⚠️ ¡Alerta de Extinción! ⚠️</div>
+        </section>
+
+        <!-- Panel Derecho: Métricas y Gráficas -->
+        <aside class="metrics-panel">
+            <section class="stats">
+                <h3>📊 Métricas Actuales</h3>
+                <div class="stat-box tick">Tick: <span id="stat-tick">0</span></div>
+                <div class="stat-box plant">Plantas: <span id="stat-plants">0</span></div>
+                <div class="stat-box herbivore">Herbívoros: <span id="stat-herbs">0</span></div>
+                <div class="stat-box predator">Depredadores: <span id="stat-preds">0</span></div>
+            </section>
+
+            <section class="chart-container">
+                <h3>📈 Histórico (últ. 200 ticks)</h3>
+                <canvas id="chartCanvas" width="300" height="200"></canvas>
+                <button id="btn-export">Exportar Serie Temporal (CSV) 📥</button>
+            </section>
+        </aside>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>
